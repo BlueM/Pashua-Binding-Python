@@ -1,110 +1,17 @@
 """
 Pashua.py - Interface to Pashua
 
-import Pashua
-
-# Create a configuration for a simple dialog ...
-var = \"\"\"
-# Lines starting with a hash character are
-# comments, empty lines are ignored
-
-# Set transparency: 0 is transparent, 1 is opaque
-*.transparency = 0.95
-
-# Set window title
-*.title = Our first example. Isn't it simple?
-
-# Define a checkbox "I like Python", default: checked
-python.type = checkbox
-python.label = I like Python
-python.checked = 1
-
-# Define radiobuttons
-book.type = radiobutton
-book.label = Which Python bible do you prefer?
-book.option = Progamming in Python
-book.option = The Python Cookbook
-book.selected = Python in a Nutshell
-
-# Define a popup menu
-editor.type = popup
-editor.label = What's your favorite Python editor for the Mac?
-editor.width = 320
-editor.option = BBedit
-editor.option = Emacs
-editor.option = PyCharm
-editor.option = vi
-editor.selected = PyCharm
-
-# Add a filesystem browser
-ob.type  =  openbrowser
-ob.label  =  Example filesystem browser (textfield + open panel)
-ob.width = 320
-ob.path = /Applications
-
-# A separator line
--
-
-# Define a text field , default: "user"
-user.type=textfield
-user.label=Enter your username
-user.width=320
-user.text=useR
-
-# Define a password field
-pwd.label=Enter your password
-pwd.type=password
-pwd.width=320
-
-# Define a password field
-host.label=Enter a hostname or IP to connect to
-host.type=combobox
-host.width=320
-host.option=www.apple.com
-host.option=www.bluem.net
-host.selected=localhost
-
-# Add a cancel button
-cncl.type=cancelbutton
-
-\"\"\"
-
-# ... and save the result in result
-result = Pashua.run(var);
-
-DESCRIPTION
-
-Pashua is an application that can be used to provide some type
-of dialog GUI for Python and shell applications under Mac OS X.
-Pashua.py is the glue between your script and Pashua. To learn
-more about Pashua, take a look at the application's Readme file.
-Pashua's homepage is http://www.bluem.net/downloads/pashua_en/
-
-EXAMPLES
-
-Most GUI elements that are available are demonstrated in the example
-above, so there's not much more to show ;-) To learn more about the
-configuration syntax, take a look at the file Syntax.rtf which is
-included in the disk image.
-
+Pashua is an application that can be used to provide some type of dialog GUI
+for Python and shell applications on Mac OS X. Pashua.py is the glue between
+your script and Pashua. To learn more about Pashua, take a look at the
+application's Readme file. Pashua's homepage is www.bluem.net/jump/pashua
 Please note in order for the example to work, the Pashua application
 must be in the current path, in /Applications/ or in ~/Applications/
-If none of these paths apply, you will have to specify it manually
-  Pashua.PATH = '/path/to/appfolder';
-before you call Pashua.run(). Alternatively, you may specify the
+If none of these paths apply, you will have to specify it manually:
+Pashua.PATH = '/path/to/appfolder';
+... before you call Pashua.run(). Alternatively, you may specify the
 path (the directory that contains Pashua.app, without trailing slash)
-as 3rd argument to run()
-
-AUTHOR / TERMS AND CONDITIONS
-
-Pashua is copyright (c) 2003-2005 Carsten Bluem <carsten@bluem.net>
-
-This Python module is based on a Perl module by Carsten Bluem and
-was ported to Python by James Reese. Further modifications were
-contributed by Canis Lupus and Carsten Bluem.
-
-You can use and /or modify this module any way you like.
-This software comes with NO WARRANTY of any kind.
+as 3rd argument to run().
 
 """
 
@@ -152,16 +59,16 @@ def run(ConfigData, Encoding = None, PashuaPath = None):
 
     try:
         CONFIGFILE = file(ConfigFile, "w")
-    	CONFIGFILE.write(ConfigData)
-    	CONFIGFILE.close()
+        CONFIGFILE.write(ConfigData)
+        CONFIGFILE.close()
 
     except IOError, Diag:
         # pass it on up, but with an extra diagnostic clue
-    	 raise IOError, "Error accessing Pashua config file '%s': %s" % (ConfigFile, Diag)
+         raise IOError, "Error accessing Pashua config file '%s': %s" % (ConfigFile, Diag)
 
     # Try to figure out the path to pashua
     if PashuaPath:
-    	PASHUA_PLACES.insert(0, PashuaPath + '/' + BUNDLE_PATH)
+        PASHUA_PLACES.insert(0, PashuaPath + '/' + BUNDLE_PATH)
 
     global PashuaDir
     if not PashuaDir:
