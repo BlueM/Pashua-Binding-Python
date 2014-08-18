@@ -21,7 +21,14 @@ conf = """
 
 # Introductory text
 txt.type = text
-txt.default = Pashua is an application for generating dialog windows from programming languages which lack support for creating native GUIs on Mac OS X. Any information you enter in this example window will be returned to the calling script when you hit "OK"; if you decide to click "Cancel" or press "Esc" instead, no values will be returned.[return][return]This window demonstrates nine of the GUI widgets that are currently available. You can find a full list of all GUI elements and their corresponding attributes in the documentation that is included with Pashua.
+txt.default = Pashua is an application for generating dialog windows from \
+programming languages which lack support for creating native GUIs on Mac OS X.\
+Any information you enter in this example window will be returned to the \
+calling script when you hit OK; if you decide to click Cancel or press \
+Esc instead, no values will be returned.[return][return]This window \
+demonstrates nine of the GUI widgets that are currently available. You can \
+find a full list of all GUI elements and their corresponding attributes in \
+the documentation that is included with Pashua.
 txt.height = 276
 txt.width = 310
 txt.x = 340
@@ -75,21 +82,19 @@ cb.type=cancelbutton
 
 # Set the images' paths relative to this file's path /
 # skip images if they can not be found in this file's path
-icon  = os.path.dirname(__file__) + '/.icon.png'
+icon = os.path.dirname(__file__) + '/.icon.png'
 bgimg = os.path.dirname(__file__) + '/.demo.png'
 if os.path.exists(icon):
     # Display Pashua's icon
-    conf += "img.type = image\nimg.x = 530\nimg.y = 255\nimg.path = %s\n" % (icon)
+    conf += "img.type = image\nimg.x = 530\nimg.y = 255\nimg.path = %s\n" % icon
 if os.path.exists(bgimg):
     # Display Pashua's icon
-    conf += "bg.type = image\nbg.x = 30\nbg.y = 2\nbg.path = %s\n" % (bgimg)
+    conf += "bg.type = image\nbg.x = 30\nbg.y = 2\nbg.path = %s\n" % bgimg
 
 
-Result = Pashua.run(conf, 'utf8')
+result = Pashua.run(conf, 'utf8')
 
 print "Pashua returned the following dictionary keys and values:"
 
-for Key in Result.keys():
-    print "%s = %s" % (Key, Result[Key])
-
-print
+for key in result.keys():
+    print "%s = %s" % (key, result[key])

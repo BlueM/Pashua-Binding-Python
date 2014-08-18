@@ -25,7 +25,14 @@ VERSION = '0.9.5'
 PATH = ''
 BUNDLE_PATH = "Pashua.app/Contents/MacOS/Pashua"
 
-PASHUA_PLACES = [os.path.join(os.path.dirname(sys.argv[0]), "Pashua"), os.path.join(os.path.dirname(sys.argv[0]), BUNDLE_PATH), os.path.join(".", BUNDLE_PATH), os.path.join("/Applications", BUNDLE_PATH), os.path.join(os.path.expanduser("~/Applications"), BUNDLE_PATH), os.path.join("/usr/local/bin", BUNDLE_PATH)]
+PASHUA_PLACES = [
+    os.path.join(os.path.dirname(sys.argv[0]), "Pashua"),
+    os.path.join(os.path.dirname(sys.argv[0]), BUNDLE_PATH),
+    os.path.join(".", BUNDLE_PATH),
+    os.path.join("/Applications", BUNDLE_PATH),
+    os.path.join(os.path.expanduser("~/Applications"), BUNDLE_PATH),
+    os.path.join("/usr/local/bin", BUNDLE_PATH)
+]
 
 
 # Globals
@@ -55,16 +62,15 @@ def run(ConfigData, Encoding = None, PashuaPath = None):
     """
 
     # Write configuration to temporary config file
-    ConfigFile = tempfile.mktemp()
+    configfile = tempfile.mktemp()
 
     try:
-        CONFIGFILE = file(ConfigFile, "w")
+        CONFIGFILE = file(configfile, "w")
         CONFIGFILE.write(ConfigData)
         CONFIGFILE.close()
-
     except IOError, Diag:
         # pass it on up, but with an extra diagnostic clue
-         raise IOError, "Error accessing Pashua config file '%s': %s" % (ConfigFile, Diag)
+        raise IOError, "Error accessing Pashua config file '%s': %s" % (configfile, Diag)
 
     # Try to figure out the path to pashua
     if PashuaPath:
@@ -81,22 +87,22 @@ def run(ConfigData, Encoding = None, PashuaPath = None):
     # Pass encoding as command-line argument, if necessary
     # Take a look at Pashua's documentation for a list of encodings
     if Encoding:
-        CliArg = "-e %s" % (Encoding)
+        encarg = "-e %s" % (Encoding)
     else:
-        CliArg = ""
+        encarg = ""
 
     # Call pashua binary with config file as argument and read result
-    Path = "'%s' %s %s" % (PashuaDir, CliArg, ConfigFile)
+    path = "'%s' %s %s" % (PashuaDir, encarg, configfile)
 
-    Result = os.popen(Path, "r").readlines()
+    result = os.popen(path, "r").readlines()
 
     # Remove config file
-    os.unlink(ConfigFile)
+    os.unlink(configfile)
 
     # Parse result
-    ResultDict = {}
-    for Line in Result:
-        Parm, Value = Line.split('=')
-        ResultDict[Parm] = Value.rstrip()
+    result_dict = {}
+    for Line in result:
+        parm, value = Line.split('=')
+        result_dict[parm] = value.rstrip()
 
-    return ResultDict
+    return result_dict
