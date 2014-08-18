@@ -9,6 +9,7 @@
 # window, bring Terminal.app to the foreground (if necessary) and hit return.
 #
 
+from __future__ import print_function
 import Pashua
 import os.path
 
@@ -94,7 +95,7 @@ if os.path.exists(bgimg):
 
 result = Pashua.run(conf, 'utf8')
 
-print "Pashua returned the following dictionary keys and values:"
+print("Pashua returned the following dictionary keys and values:")
 
 for key in result.keys():
-    print "%s = %s" % (key, result[key])
+    print("%s = %s" % (key, result[key]))
