@@ -83,15 +83,11 @@ cb.type=cancelbutton
 
 # Set the images' paths relative to this file's path /
 # skip images if they can not be found in this file's path
-icon = os.path.dirname(__file__) + '/.icon.png'
-bgimg = os.path.dirname(__file__) + '/.demo.png'
+#icon = os.path.dirname(__file__) + '/.icon.png'
+icon = os.path.dirname(os.path.dirname(Pashua.locate_pashua())) + '/Resources/AppIcon@2.png'
 if os.path.exists(icon):
     # Display Pashua's icon
-    conf += "img.type = image\nimg.x = 530\nimg.y = 255\nimg.path = %s\n" % icon
-if os.path.exists(bgimg):
-    # Display Pashua's icon
-    conf += "bg.type = image\nbg.x = 30\nbg.y = 2\nbg.path = %s\n" % bgimg
-
+    conf += "img.type = image\nimg.x = 435\nimg.y = 248\nimg.maxwidth = 128\nimg.tooltip = This is an element of type 'image'\nimg.path = %s\n" % icon
 
 result = Pashua.run(conf)
 
