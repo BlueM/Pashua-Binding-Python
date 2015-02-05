@@ -72,9 +72,9 @@ def run(config_data, pashua_path=None):
     os.unlink(configfile_path)
 
     # Parse result
-    result_dict = {}
-    for Line in result:
-        parm, value = Line.split('=')
-        result_dict[parm] = value.rstrip()
+    d = {}
+    for line in result:
+        k, _, v = line.partition('=')
+        d[k] = v.rstrip()
 
-    return result_dict
+    return d
