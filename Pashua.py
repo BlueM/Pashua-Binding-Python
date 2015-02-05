@@ -52,7 +52,7 @@ def locate_pashua(places):
 
 # Calls the pashua binary, parses its result
 # string and generates a dictionary that's returned.
-def run(config_data, encoding=None, pashua_path=None):
+def run(config_data, pashua_path=None):
     """
     Create a temporary config file holding ConfigData, and run
     Pashua passing it the pathname of the config file on the
@@ -82,15 +82,9 @@ def run(config_data, encoding=None, pashua_path=None):
         if not PashuaDir:
             raise IOError, "Unable to locate the Pashua application."
 
-    # Pass encoding as command-line argument, if necessary
-    # Take a look at Pashua's documentation for a list of encodings
-    if encoding:
-        encarg = "-e %s" % encoding
-    else:
-        encarg = ""
 
     # Call pashua binary with config file as argument and read result
-    path = "'%s' %s %s" % (PashuaDir, encarg, configfile_path)
+    path = "'%s' %s" % (PashuaDir, configfile_path)
 
     result = os.popen(path, "r").readlines()
 

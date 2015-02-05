@@ -93,7 +93,7 @@ if os.path.exists(bgimg):
     conf += "bg.type = image\nbg.x = 30\nbg.y = 2\nbg.path = %s\n" % bgimg
 
 
-result = Pashua.run(conf, 'utf8')
+result = Pashua.run(conf)
 
 print("Pashua returned the following dictionary keys and values:")
 
