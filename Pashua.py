@@ -19,9 +19,6 @@ import os.path
 import sys
 import tempfile
 
-# Configuration variables
-
-PATH = ''
 BUNDLE_PATH = "Pashua.app/Contents/MacOS/Pashua"
 
 PASHUA_PLACES = [
@@ -34,30 +31,26 @@ PASHUA_PLACES = [
 ]
 
 
-# Globals
+# Find Pashua by looking in each of the search locations, returning the first
+# matching path. Will raise an exception, if Pashua.app cannot be found.
+def locate_pashua(pashua_path=None):
+    if pashua_path:
+        # Custom path given
+        PASHUA_PLACES.insert(0, pashua_path + '/' + BUNDLE_PATH)
 
-PashuaDir = None
+    for bundle_path in PASHUA_PLACES:
+        if os.path.exists(bundle_path):
+            return bundle_path
 
-
-# Search for the pashua binary
-def locate_pashua(places):
-    """
-    Find Pashua by looking in each of places in order, returning the path,
-    or None if no Pashua was found.
-    """
-    for folder in places:
-        if os.path.exists(folder):
-            return folder
+    raise IOError, "Unable to locate the Pashua application."
 
 
-# Calls the pashua binary, parses its result
-# string and generates a dictionary that's returned.
+# Calls the pashua executable, parses its result string and generates
+# a dictionary that's returned.
 def run(config_data, pashua_path=None):
-    """
-    Create a temporary config file holding ConfigData, and run
-    Pashua passing it the pathname of the config file on the
-    command line.
-    """
+
+    # Get path to the executable inside Pashua.app
+    app_path = locate_pashua(pashua_path)
 
     # Write configuration to temporary config file
     configfile_path = tempfile.mktemp()
@@ -68,23 +61,10 @@ def run(config_data, pashua_path=None):
         configfile.close()
     except IOError, Diag:
         # pass it on up, but with an extra diagnostic clue
-        raise IOError, "Error accessing Pashua config file '%s': %s" % (configfile_path, Diag)
-
-    # Try to figure out the path to pashua
-    if pashua_path:
-        PASHUA_PLACES.insert(0, pashua_path + '/' + BUNDLE_PATH)
-
-    global PashuaDir
-    if not PashuaDir:
-        if PATH:
-            PASHUA_PLACES.insert(0, PATH)
-        PashuaDir = locate_pashua(PASHUA_PLACES)
-        if not PashuaDir:
-            raise IOError, "Unable to locate the Pashua application."
-
+        raise IOError, "Error writing tempfile %s: %s" % (configfile_path, Diag)
 
     # Call pashua binary with config file as argument and read result
-    path = "'%s' %s" % (PashuaDir, configfile_path)
+    path = "'%s' %s" % (app_path, configfile_path)
 
     result = os.popen(path, "r").readlines()
 
