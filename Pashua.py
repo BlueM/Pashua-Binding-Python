@@ -21,7 +21,6 @@ import tempfile
 
 # Configuration variables
 
-VERSION = '0.9.5'
 PATH = ''
 BUNDLE_PATH = "Pashua.app/Contents/MacOS/Pashua"
 
