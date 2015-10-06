@@ -17,7 +17,6 @@ as 3rd argument to run().
 
 import os.path
 import sys
-import tempfile
 import subprocess
 
 BUNDLE_PATH = "Pashua.app/Contents/MacOS/Pashua"
