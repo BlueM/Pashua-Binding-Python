@@ -18,6 +18,7 @@ as 3rd argument to run().
 import os.path
 import sys
 import tempfile
+import subprocess
 
 BUNDLE_PATH = "Pashua.app/Contents/MacOS/Pashua"
 
@@ -52,29 +53,20 @@ def run(config_data, pashua_path=None):
     # Get path to the executable inside Pashua.app
     app_path = locate_pashua(pashua_path)
 
-    # Write configuration to temporary config file
-    configfile_path = tempfile.mktemp()
 
-    try:
-        configfile = file(configfile_path, "w")
-        configfile.write(config_data)
-        configfile.close()
-    except IOError, Diag:
-        # pass it on up, but with an extra diagnostic clue
-        raise IOError, "Error writing tempfile %s: %s" % (configfile_path, Diag)
+    # Send string to pashua standard input, receive result.
+    s=subprocess.Popen([app_path,  "-"], 
+                        stdin=subprocess.PIPE,
+                        stdout=subprocess.PIPE, 
+                        stderr=subprocess.PIPE)
+    (result, outerror)=s.communicate(input=config_data)
 
-    # Call pashua binary with config file as argument and read result
-    path = "'%s' %s" % (app_path, configfile_path)
-
-    result = os.popen(path, "r").readlines()
-
-    # Remove config file
-    os.unlink(configfile_path)
 
     # Parse result
     d = {}
-    for line in result:
-        k, _, v = line.partition('=')
-        d[k] = v.rstrip()
+    for line in result.split('\n'):
+        if '=' in line: # avoid empty lines.
+            k, _, v = line.partition('=')
+            d[k] = v.rstrip()
 
     return d
