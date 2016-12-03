@@ -42,7 +42,7 @@ def locate_pashua(pashua_path=None):
         if os.path.exists(bundle_path):
             return bundle_path
 
-    raise IOError, "Unable to locate the Pashua application."
+    raise IOError("Unable to locate the Pashua application.")
 
 
 # Calls the pashua executable, parses its result string and generates
