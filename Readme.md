@@ -1,7 +1,7 @@
 Overview
 ===========
 
-This is a Python 2 language binding (glue code) for using [Pashua](http://www.bluem.net/jump/pashua) from Python. Pashua is a Mac OS X application for using native GUI dialog windows in various programming languages.
+This is a Python (version 2 or 3) language binding (glue code) for using [Pashua](http://www.bluem.net/jump/pashua) from Python. Pashua is a Mac OS X application for using native GUI dialog windows in various programming languages.
 
 This code can be found in a GitHub repository at https://github.com/BlueM/Pashua-Binding-Python. For examples in other programming languages, see https://github.com/BlueM/Pashua-Bindings.
 
@@ -21,14 +21,14 @@ Of course, you will need Pashua on your Mac to run the example. The code expects
 
 Compatibility
 =============
-This code requires Python 2.6 or newer and should run with the default Python installation that ships with Mac OS X 10.6 or later.
+This code requires Python 2.6 or newer and should run with the default Python 2.6/2.7 installations shipped with OS X 10.6 or later as well as with Python 3.5.
 
 It is compatible with Pashua 0.10. It will work with earlier versions of Pashua, but non-ASCII characters will not be displayed correctly, as any versions before 0.10 required an argument for marking input as UTF-8.
 
 
 Authors
 =========
-James Reese, Tor Sigurdsson, Canis Lupus, Ed Heil, Carsten Blüm
+James Reese, Tor Sigurdsson, Canis Lupus, Ed Heil, Alex Chan, Carsten Blüm
 
 
 License
