@@ -14,7 +14,7 @@ from __future__ import print_function
 import Pashua
 import os.path
 
-conf = """
+conf = u"""
 # Set window title
 *.title = Welcome to Pashua
 
@@ -92,14 +92,14 @@ icon = app_bundle + '/Resources/AppIcon@2.png'
 
 if os.path.exists(icon):
     # Display Pashua's icon
-    conf += """img.type = image
-               img.x = 435
-               img.y = 248
-               img.maxwidth = 128
-               img.tooltip = This is an element of type 'image'
-               img.path = %s""" % icon
+    conf += u"""img.type = image
+                img.x = 435
+                img.y = 248
+                img.maxwidth = 128
+                img.tooltip = This is an element of type 'image'
+                img.path = %s""" % icon
 
-result = Pashua.run(conf)
+result = Pashua.run(conf.encode('utf8'))
 
 print("Pashua returned the following dictionary keys and values:")
 

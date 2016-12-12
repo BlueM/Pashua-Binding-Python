@@ -42,7 +42,7 @@ def locate_pashua(pashua_path=None):
         if os.path.exists(bundle_path):
             return bundle_path
 
-    raise IOError, "Unable to locate the Pashua application."
+    raise IOError("Unable to locate the Pashua application.")
 
 
 # Calls the pashua executable, parses its result string and generates
@@ -54,16 +54,15 @@ def run(config_data, pashua_path=None):
 
 
     # Send string to pashua standard input, receive result.
-    s=subprocess.Popen([app_path,  "-"], 
+    s=subprocess.Popen([app_path,  "-"],
                         stdin=subprocess.PIPE,
-                        stdout=subprocess.PIPE, 
+                        stdout=subprocess.PIPE,
                         stderr=subprocess.PIPE)
-    (result, outerror)=s.communicate(input=config_data)
-
+    result, _ = s.communicate(input=config_data)
 
     # Parse result
     d = {}
-    for line in result.split('\n'):
+    for line in result.decode('utf8').splitlines():
         if '=' in line: # avoid empty lines.
             k, _, v = line.partition('=')
             d[k] = v.rstrip()
